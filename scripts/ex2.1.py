@@ -1,3 +1,5 @@
+#!/Library/Frameworks/Python.framework/Versions/3.5/bin/python3
+
 # Exercise 2.1:
 
 # Write a script with two methods. The first method should read in a matrix like the one here and return a list of lists. The second method should do the inverse, namely take, as input, a list of lists and save it in a file with same format as the initial file. The first method should take the file name as a parameter. The second method should take two arguments, the list of lists, and a filename of where to save the output.
@@ -25,11 +27,11 @@ def mat2list(matrix = '1 2 3\n2 4 6'):
   return(list_of_lists)
 
 
-def list2mat(l = [[2, 3, 3], [4, 4, 4]], filename = '../data/matrix.out.txt'): 
+def list2mat(l = [[2, 3, 3], [4, 4, 4]], outfile = '../data/matrix.out.txt'): 
   """
   Transform a list of lists to a matrix and write it to file
   :param l: List of lists of numbers describing a matrix
-  :returns: Returns nothing, prints matrix to filename
+  :returns: Returns nothing, prints matrix to outfile
   """
   
   # Convert list values to strings
@@ -44,7 +46,7 @@ def list2mat(l = [[2, 3, 3], [4, 4, 4]], filename = '../data/matrix.out.txt'):
   print(text_matrix)
   
   # Prepare outfile
-  out = open(filename, 'w')
+  out = open(outfile, 'w')
 
   # Write result to outfile
   out.write(text_matrix)
@@ -54,13 +56,13 @@ if __name__ == '__main__':
   # Try method with 2 args
   try:
     # Filename from 2nd arg
-    filename = sys.argv[2]
+    outfile = sys.argv[2]
 
     # Create list from string input 
     list_of_lists = ast.literal_eval(sys.argv[1])
 
     # Convert list of lists to matrix and write it to filename
-    list2mat(list_of_lists, filename)
+    list2mat(list_of_lists, outfile)
 
   except IndexError as e: 
 
@@ -79,4 +81,4 @@ if __name__ == '__main__':
 
     # Error handling
     except IndexError as e: 
-      print(e, '- husk korrekt antal argumenter')
+      print(e, '- husk korrekt antal argumenter. "[[2, 3], [4, 4]]" <outputfil> eller <matrixfil>')
