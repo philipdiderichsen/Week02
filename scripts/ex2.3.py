@@ -19,12 +19,28 @@ def extract_requests(jsontxt):
   :returns: List of request strings 
   """
 
+  # Get json representation of data
   pizza_json = json.loads(jsontxt)
 
+  # Extract a list of request texts
   request_list = [d['request_text'] for d in pizza_json]
 
   return(request_list)
 
+
+def request_to_countlist(l, terms): 
+  """
+  :param l: List representation of request text
+  :param terms: List of distinct terms
+  :returns: List of counts of each term from terms in l
+  """
+
+  counts = [l.count(term) for term in terms]
+
+  return(counts)
+
+
+#def build_matrix
 
 
 if __name__ == '__main__':
@@ -32,7 +48,6 @@ if __name__ == '__main__':
   try:
  
     print(sys.argv[1])
-
 
   except IndexError as e: 
     
@@ -42,6 +57,26 @@ if __name__ == '__main__':
     
     pizza_train = open(infile, 'r').read()
 
+    # List of request strings
     request_list = extract_requests(pizza_train)
 
-    print(str(request_list[:2])) 
+    # Number of texts
+    N = len(request_list)
+
+    # Convert request texts to lists
+    requests_as_lists = [s.split() for s in request_list]
+
+    # Flatten list of request lists, get distinct values with set(), convert back to list
+    distinct_terms = list(set([term for reqst in requests_as_lists for term in reqst]))
+    
+    # Number of distinct terms
+    M = len(distinct_terms)
+    
+    print(N, M)
+
+    # Build matrix. One list of counts for each request-as-list
+    matrix = [request_to_countlist(reqst, distinct_terms) for reqst in request_list]
+
+    print(str(distinct_terms[:10]))
+    print( '\n'.join([str(l[:10]) for l in matrix][:8])  )
+
